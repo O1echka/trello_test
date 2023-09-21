@@ -20,7 +20,7 @@ public class GetBoardTest {
     private static final String USER_TOKEN = "ATTA91b4055d31efdbae21bf0305514f968fc5e31c8c2dca3ab4893d0d68c36e9429A17F1473";
 
     private String boardId;
-    private String boardName = "My new board " + LocalDateTime.now();
+    private String newBoardNAme = "My new board " + LocalDateTime.now();
 
     private RequestSpecification commonRequestWithKeyAndToken() {
         return RestAssured.given() //create base empty request
@@ -33,7 +33,7 @@ public class GetBoardTest {
     @BeforeEach //it will run this method BEFORE each method annotated with @Test in this class
     public void createBoard() {
         RequestSpecification createBoardRequest = commonRequestWithKeyAndToken()
-                .queryParam("name", boardName) //add 'name' query parameter
+                .queryParam("name", newBoardNAme) //add 'name' query parameter
                 .contentType(ContentType.JSON); //Trello API needs it
 
         Response createBoardResponse = createBoardRequest.post(CREATE_A_BOARD_RELATIVE_URL);
@@ -53,7 +53,7 @@ public class GetBoardTest {
         getBoardResponse.prettyPrint();//print to console everything about RESPONSE
         getBoardResponse.then()
                 .statusCode(200) //check response status code is 200
-                .body("name", Matchers.is(boardName)); //check element with name 'name' in response is equal to 'Testing'
+                .body("name", Matchers.is(newBoardNAme)); //check element with name 'name' in response is equal to 'Testing'
     }
 
     @AfterEach //it will run this method AFTER each method annotated with @Test in this class
